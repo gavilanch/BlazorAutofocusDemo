@@ -1,0 +1,31 @@
+﻿@page "/"
+@using AutofocusDemo.Models
+@inject IJSRuntime js
+
+<h3>Ejemplo Autofocus</h3>
+
+<EditForm Model="persona">
+
+    <div class="form-group">
+        <label>Nombre</label>
+        <InputText id="txtNombrePersona" class="form-control" @bind-Value="@persona.Nombre" />
+    </div>
+
+    <div class="form-group">
+        <label>Edad</label>
+        <InputNumber class="form-control" @bind-Value="@persona.Edad" />
+    </div>
+
+</EditForm>
+
+@code{
+    private Persona persona = new Persona();
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("focusById", "txtNombrePersona");
+        }
+    }
+}
